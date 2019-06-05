@@ -7,17 +7,21 @@ import pandas as pd
 import sys
 import argparse
 import os
+from pButtons_ParseMgstat import parse
 from datetime import datetime
 from bokeh.plotting import *
 
-##retrieve mgstat file input
+##retrieve pButtons file input
 parser = argparse.ArgumentParser()
 parser.add_argument("file")
 args = parser.parse_args()
-mgstatfile = args.file
+pbuttons = args.file
+
+##parse pButtons file
+parse(pbuttons)
 
 ##put mgstat data into a dataframe, index on date
-data = pd.read_csv(mgstatfile,header=1,parse_dates=[[0,1]])
+data = pd.read_csv(os.getcwd()+"/mgstat.txt",header=1,parse_dates=[[0,1]])
 data.columns = data.columns.str.strip()
 data=data.rename(columns={'Date_       Time':'DateTime'})
 data.index = data.DateTime
