@@ -5,10 +5,10 @@ import os
 import argparse
 
 ## parses pButtons mgstat section
-def parse(pButtons):
+def parse(pButtons,output_dir):
 	f = open(pButtons)
 	inmgstat = 0
-	output = open(os.getcwd()+"/mgstat.txt","w+")
+	output = open(output_dir+"/mgstat.txt","w+")
 	for line in f:
 	    if "beg_mgstat" in line:
 	        inmgstat = 1

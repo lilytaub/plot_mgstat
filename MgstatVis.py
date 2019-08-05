@@ -13,21 +13,23 @@ from bokeh.plotting import *
 
 ##retrieve pButtons file input
 parser = argparse.ArgumentParser()
-parser.add_argument("file")
+parser.add_argument('-f','--file', dest='file', help='pButtons file')
+parser.add_argument('-o','--output', dest='output', help='directory for output files')
 args = parser.parse_args()
 pbuttons = args.file
+output = args.output
 
 ##parse pButtons file
-parse(pbuttons)
+parse(pbuttons,output)
 
 ##put mgstat data into a dataframe, index on date
-data = pd.read_csv(os.getcwd()+"/mgstat.txt",header=1,parse_dates=[[0,1]])
+data = pd.read_csv(output+"/mgstat.txt",header=1,parse_dates=[[0,1]])
 data.columns = data.columns.str.strip()
 data=data.rename(columns={'Date_       Time':'DateTime'})
 data.index = data.DateTime
 
 ##output file for bokeh plots
-output_file(os.getcwd()+"/mgstatvis.html")
+output_file(output+"/mgstatvis.html")
 
 ##tools
 TOOLS="pan,box_zoom,reset,save"
