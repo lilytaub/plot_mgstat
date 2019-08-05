@@ -3,7 +3,6 @@
 
 import math
 import pandas as pd
-import os
 import argparse
 from datetime import datetime
 from matplotlib.dates import DayLocator, HourLocator, DateFormatter, drange, IndexDateFormatter
@@ -17,18 +16,20 @@ def parse_datetime(x):
 
 ## retrieve pButtons input file
 parser = argparse.ArgumentParser()
-parser.add_argument("file")
+parser.add_argument('-f','--file',dest='file',help='pButtons file')
+parser.add_argument('-o','--output',dest='output',help='directory for output files')
 args = parser.parse_args()
 pbuttons = args.file
+output = args.output
 
 ## parse pButtons file, creates perfmon.txt file in cwd
-parse(pbuttons)
+parse(pbuttons,output)
 
 ## create dataframe from perfmon data text file
-perfmon = pd.read_csv(os.getcwd()+"/perfmon.txt", header=0, index_col=0,low_memory=False,converters={0: parse_datetime})
+perfmon = pd.read_csv(output+"/perfmon.txt", header=0, index_col=0,low_memory=False,converters={0: parse_datetime})
 
 ## create output file for plots
-output_file(os.getcwd()+"/perfmonvis.html")
+output_file(output+"/perfmonvis.html")
 
 ##tools
 TOOLS="pan,box_zoom,reset,save"

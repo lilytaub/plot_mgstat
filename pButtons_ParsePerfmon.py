@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-import os
-
-def parse(pButtons):
+def parse(pButtons,output):
 	f = open(pButtons)
 	inperf = 0
-	output = open(os.getcwd()+"/perfmon.txt","w+")
+	output = open(output+"/perfmon.txt","w+")
 	for line in f:
 		if "beg_win_perfmon" in line:
 			inperf = 1
